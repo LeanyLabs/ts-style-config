@@ -1,6 +1,6 @@
 {
   "name": "@leanylabs/ts-style-config",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "repository": "leanylabs/ts-style-config",
   "description": "LeanyLabs TypeScript Style for monday.com integrations",
   "main": "build/src/index.js",
