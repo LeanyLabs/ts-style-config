@@ -1,3 +1,4 @@
 USAGE
 
-TODO: fill it out!
+after installing package, run
+> npx llts init
