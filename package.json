@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "repository": "leanylabs/ts-style-config",
   "description": "LeanyLabs TypeScript Style for monday.com integrations",
-  "main": "build/src/index.js",
+  "main": "build/src/init.js",
   "bin": {
-    "init": "build/bin/init.js"
+    "init": "build/src/init.js"
   },
   "scripts": {
     "build": "yarn run compile",
