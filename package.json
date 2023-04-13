@@ -7,6 +7,15 @@
   "bin": {
     "init": "build/src/init.js"
   },
+  "files": [
+    "CHANGELOG.md",
+    "build/src",
+    "build/.eslintrc.json",
+    ".prettierrc.json",
+    "tsconfig-google.json",
+    "tsconfig.json",
+    ".eslintrc.json"
+  ],
   "scripts": {
     "build": "yarn run compile",
     "compile": "tsc",
