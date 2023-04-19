@@ -1,19 +1,27 @@
 import * as kleur from 'kleur';
 import * as fs from 'fs';
+
 import * as path from 'path';
+import {exec} from 'child_process';
 
 const templatesPath = __dirname.endsWith('build/src')
   ? path.join(__dirname, '..', '..', 'templates')
   : path.join(__dirname, '..', 'templates');
 
+export async function installPackages() {
+  await execSync('yarn add eslint-plugin-node@latest -D');
+  await execSync('yarn add eslint-plugin-prettier@latest -D');
+}
+
 export async function updatePackageJson() {
   console.log(kleur.green('Updating package.json...'));
-  const packageJsonPath =path.join(process.cwd(), 'package.json');
+  const packageJsonPath = path.join(process.cwd(), 'package.json');
   const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
   packageJson.scripts = {
     ...packageJson.scripts,
-    lint: 'eslint --ext .js,.jsx,.ts,.tsx src',
-    format: 'prettier --config .prettierrc.js --write src/**/*.{js,jsx,ts,tsx}',
+    lint: 'eslint --config .eslintrc.js --ext .tsx --ext .ts src',
+    'lint:fix': 'eslint --config .eslintrc.js --ext .ts --ext .tsx --fix src',
+    format: 'prettier --config .prettierrc.js --write src/**/*.{ts,tsx}',
   };
   fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
 }
@@ -73,4 +81,20 @@ function copyFile(target: string, source?: string) {
   } catch (e) {
     console.error(`Failed to copy ${source} to ${target}:`, e);
   }
+}
+
+async function execSync(command: string) {
+  return new Promise((resolve, reject) => {
+    exec(command, (error, stdout, stderr) => {
+      if (error) {
+        reject(error);
+      }
+
+      if (stderr) {
+        reject(stderr);
+      }
+
+      resolve(stdout);
+    });
+  });
 }

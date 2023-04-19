@@ -20,8 +20,9 @@
   "scripts": {
     "build": "yarn run compile",
     "compile": "tsc",
-    "lint": "eslint '**/*.ts'",
-    "fix": "eslint --fix '**/*.ts'",
+    "format": "prettier --config .prettierrc.json --write src/**/*.ts",
+    "lint": "eslint --ext .ts --config .eslintrc.json src",
+    "lint:fix": "eslint --ext .ts --config .eslintrc.json --fix src",
     "run:test": "yarn clean && mkdir test__ && cp -R test_project/ test__/ && cd test__ && ts-node ../src/init.ts && cd ..",
     "clean": "rm -rf test__/"
   },
@@ -46,5 +47,9 @@
   },
   "peerDependencies": {
     "typescript": ">=4"
+  },
+  "engines": {
+    "node": ">=16",
+    "npm": ">=7"
   }
 }

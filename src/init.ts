@@ -8,6 +8,7 @@ import {
   updatePrettier,
   updateEditorConfig,
   updatePackageJson,
+  installPackages,
 } from './utils';
 
 async function init() {
@@ -18,8 +19,11 @@ async function init() {
   await updateElisnt();
   await updatePrettier();
   await updatePackageJson();
+
+  await installPackages();
 }
 
+// eslint-disable-next-line no-process-exit
 init().then(() => process.exit(0));
 
 async function greeting() {
@@ -43,6 +47,7 @@ async function greeting() {
 
   if (!answer) {
     console.log(kleur.red('Aborted'));
+    // eslint-disable-next-line no-process-exit
     process.exit(0);
   }
 }

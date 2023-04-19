@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ['@leanylabs/ts-style-config/.eslintrc.json'],
+  extends: ['./node_modules/@leanylabs/ts-style-config/.eslintrc.json'],
   rules: {
 
   }
