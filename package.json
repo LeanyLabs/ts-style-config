@@ -20,7 +20,9 @@
     "build": "yarn run compile",
     "compile": "tsc",
     "lint": "eslint '**/*.ts'",
-    "fix": "eslint --fix '**/*.ts'"
+    "fix": "eslint --fix '**/*.ts'",
+    "run:test": "yarn clean && mkdir test__ && cp -R test_project/ test__/ && cd test__ && ts-node ../src/init.ts && cd ..",
+    "clean": "rm -rf test__/"
   },
   "author": "LeanyLabs",
   "license": "MIT",
@@ -31,10 +33,14 @@
     "eslint-config-prettier": "^8.0.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "prettier": "~2.8.0"
+    "kleur": "^4.1.5",
+    "prettier": "~2.8.0",
+    "promptly": "^3.2.0"
   },
   "devDependencies": {
     "@types/node": "^18.13.0",
+    "@types/promptly": "^3.0.2",
+    "ts-node": "^10.9.1",
     "typescript": "^4.9.5"
   },
   "peerDependencies": {
