@@ -9,8 +9,12 @@ const templatesPath = __dirname.endsWith('build/src')
   : path.join(__dirname, '..', 'templates');
 
 export async function installPackages() {
-  await execSync('yarn add eslint-plugin-node@latest -D');
-  await execSync('yarn add eslint-plugin-prettier@latest -D');
+  try {
+    await execSync('yarn add eslint-plugin-node -D');
+    await execSync('yarn add eslint-plugin-prettier -D');
+  } catch (e) {
+    console.error('Failed to install packages:', e);
+  }
 }
 
 export async function updatePackageJson() {
@@ -84,6 +88,7 @@ function copyFile(target: string, source?: string) {
 }
 
 async function execSync(command: string) {
+  console.log(kleur.grey(` -- running command: ${command}`));
   return new Promise((resolve, reject) => {
     exec(command, (error, stdout, stderr) => {
       if (error) {
