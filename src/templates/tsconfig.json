@@ -1,0 +1,11 @@
+{
+  "extends": "@leanylabs/ts-style-config/tsconfig.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "build"
+  },
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.ts"
+  ]
+}
