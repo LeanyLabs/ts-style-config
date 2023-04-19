@@ -2,11 +2,11 @@
   "extends": "@leanylabs/ts-style-config/tsconfig.json",
   "compilerOptions": {
     "rootDir": ".",
-    "outDir": "build"
-  },    
-  "baseUrl": ".",
-  "paths": {
-    "~/*": ["./src/*"]
+    "outDir": "build",
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./src/*"]
+    },
   },
   "include": [
     "src/**/*.ts",
