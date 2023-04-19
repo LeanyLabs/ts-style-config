@@ -2,7 +2,7 @@ import * as kleur from 'kleur';
 import * as fs from 'fs';
 import * as path from 'path';
 
-const templatesPath = __dirname;
+const templatesPath = path.join(__dirname, '..', 'templates');
 
 export async function updateTsConfig() {
   console.log(kleur.green('Updating tsconfig...'));

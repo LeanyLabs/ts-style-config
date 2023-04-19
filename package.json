@@ -9,6 +9,7 @@
   },
   "files": [
     "CHANGELOG.md",
+    "templates/**/*",
     "build/src",
     "build/.eslintrc.json",
     ".prettierrc.json",

@@ -1,3 +1,3 @@
 USAGE
 
-TODO: fill it out!
+`npx @leanylabs/ts-style-config`

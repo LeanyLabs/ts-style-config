@@ -1,6 +1,6 @@
 import * as promptly from 'promptly';
 import * as kleur from 'kleur';
-import { updateTsConfig, updateElisnt, updatePrettier } from './templates';
+import { updateTsConfig, updateElisnt, updatePrettier } from './utils';
 
 async function init() {
   await greeting();
