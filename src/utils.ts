@@ -2,11 +2,13 @@ import * as kleur from 'kleur';
 import * as fs from 'fs';
 import * as path from 'path';
 
-const templatesPath = path.join(__dirname, '..', 'templates');
+const templatesPath = __dirname.endsWith('build/src')
+  ? path.join(__dirname, '..', '..', 'templates')
+  : path.join(__dirname, '..', 'templates');
 
 export async function updateTsConfig() {
   console.log(kleur.green('Updating tsconfig...'));
-  
+
   deleteIfExists('tsconfig.js');
 
   copyFile('tsconfig.json');

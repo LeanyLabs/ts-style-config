@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import * as promptly from 'promptly';
 import * as kleur from 'kleur';
 import { updateTsConfig, updateElisnt, updatePrettier } from './utils';
