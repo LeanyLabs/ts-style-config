@@ -6,6 +6,23 @@ const templatesPath = __dirname.endsWith('build/src')
   ? path.join(__dirname, '..', '..', 'templates')
   : path.join(__dirname, '..', 'templates');
 
+export async function updatePackageJson() {
+  console.log(kleur.green('Updating package.json...'));
+  const packageJsonPath =path.join(process.cwd(), 'package.json');
+  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+  packageJson.scripts = {
+    ...packageJson.scripts,
+    lint: 'eslint --ext .js,.jsx,.ts,.tsx src',
+    format: 'prettier --config .prettierrc.js --write src/**/*.{js,jsx,ts,tsx}',
+  };
+  fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
+}
+
+export async function updateEditorConfig() {
+  console.log(kleur.green('Updating editor config...'));
+  copyFile('.editorconfig');
+}
+
 export async function updateTsConfig() {
   console.log(kleur.green('Updating tsconfig...'));
 

@@ -2,14 +2,22 @@
 
 import * as promptly from 'promptly';
 import * as kleur from 'kleur';
-import { updateTsConfig, updateElisnt, updatePrettier } from './utils';
+import {
+  updateTsConfig,
+  updateElisnt,
+  updatePrettier,
+  updateEditorConfig,
+  updatePackageJson,
+} from './utils';
 
 async function init() {
   await greeting();
 
+  await updateEditorConfig();
   await updateTsConfig();
   await updateElisnt();
   await updatePrettier();
+  await updatePackageJson();
 }
 
 init().then(() => process.exit(0));
