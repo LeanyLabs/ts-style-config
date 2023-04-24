@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import {exec} from 'child_process';
 
-const templatesPath = __dirname.endsWith('build/src')
+const templatesPath = __dirname.endsWith('build/src') || __dirname.endsWith('build\\src')
   ? path.join(__dirname, '..', '..', 'templates')
   : path.join(__dirname, '..', 'templates');
 
