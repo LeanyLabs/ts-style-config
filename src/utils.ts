@@ -2,11 +2,12 @@ import * as kleur from 'kleur';
 import * as fs from 'fs';
 
 import * as path from 'path';
-import {exec} from 'child_process';
+import { exec } from 'child_process';
 
-const templatesPath = __dirname.endsWith('build/src') || __dirname.endsWith('build\\src')
-  ? path.join(__dirname, '..', '..', 'templates')
-  : path.join(__dirname, '..', 'templates');
+const templatesPath =
+  __dirname.endsWith('build/src') || __dirname.endsWith('build\\src')
+    ? path.join(__dirname, '..', '..', 'templates')
+    : path.join(__dirname, '..', 'templates');
 
 export async function installPackages() {
   try {
@@ -86,7 +87,6 @@ function copyFile(target: string, source?: string) {
     console.error(`Failed to copy ${source} to ${target}:`, e);
   }
 }
-
 async function execSync(command: string) {
   console.log(kleur.grey(` -- running command: ${command}`));
   return new Promise((resolve, reject) => {
