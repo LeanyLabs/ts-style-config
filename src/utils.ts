@@ -19,30 +19,38 @@ export async function installPackages() {
 }
 
 export async function updatePackageJson(nodeOrBrowser: string) {
-  function listFileExtensions(nodeOrBrowser: string, joiner = ' --ext ', prefix = ' --ext ') {
-    switch (nodeOrBrowser) {
-      case 'node':
-        return prefix + ['.ts'].join(joiner);
-      case 'browser':
-        return prefix + ['.ts', '.tsx'].join(joiner);
-      default:
-        return prefix + ['.ts', '.tsx'].join(joiner);
-    }
-  }
   console.log(kleur.green('Updating package.json...'));
   const packageJsonPath = path.join(process.cwd(), 'package.json');
   const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+
   packageJson.scripts = {
     ...packageJson.scripts,
-    lint: `eslint --config .eslintrc.js${listFileExtensions(nodeOrBrowser)} src`,
-    'lint:fix': `eslint --config .eslintrc.js${listFileExtensions(nodeOrBrowser)} --fix src`,
-    format: `prettier --config .prettierrc.js --write src/**/*.{${listFileExtensions(
-      nodeOrBrowser,
-      ',',
-      ''
-    ).trim()}}`,
+    ...defineLinterCommands(nodeOrBrowser),
   };
   fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
+}
+
+function defineLinterCommands(nodeOrBrowser: string) {
+  switch (nodeOrBrowser) {
+    case 'node':
+      return {
+        lint: 'eslint --config .eslintrc.js --ext .ts src',
+        'lint:fix': 'eslint --config .eslintrc.js --ext .ts --fix src',
+        format: 'prettier --config .prettierrc.js --write src/**/*.{ts}',
+      };
+    case 'browser':
+      return {
+        lint: 'eslint --config .eslintrc.js --ext .tsx --ext .ts src',
+        'lint:fix': 'eslint --config .eslintrc.js --ext .ts --ext .tsx --fix src',
+        format: 'prettier --config .prettierrc.js --write src/**/*.{ts,tsx}',
+      };
+    default:
+      return {
+        lint: 'eslint --config .eslintrc.js --ext .tsx --ext .ts src',
+        'lint:fix': 'eslint --config .eslintrc.js --ext .ts --ext .tsx --fix src',
+        format: 'prettier --config .prettierrc.js --write src/**/*.{ts,tsx}',
+      };
+  }
 }
 
 export async function updateEditorConfig() {
