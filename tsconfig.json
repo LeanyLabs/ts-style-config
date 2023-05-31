@@ -4,7 +4,10 @@
     "rootDir": ".",
     "outDir": "build",
     "module": "commonjs",
-    "types": ["node", "jest"],
+    "esModuleInterop": true,
+    "useUnknownInCatchVariables": false,
+    "strictPropertyInitialization": false,
+    "types": ["node", "jest"]
   },
   "include": ["src/**/*.ts", "test/**/*.ts"],
   "exclude": ["test/fixtures/**/*.*", "template/**/*.*"]

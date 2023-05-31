@@ -18,15 +18,29 @@ export async function installPackages() {
   }
 }
 
-export async function updatePackageJson() {
+export async function updatePackageJson(nodeOrBrowser: string) {
+  function listFileExtensions(nodeOrBrowser: string, joiner = ' --ext ', prefix = ' --ext ') {
+    switch (nodeOrBrowser) {
+      case 'node':
+        return prefix + ['.ts'].join(joiner);
+      case 'browser':
+        return prefix + ['.ts', '.tsx'].join(joiner);
+      default:
+        return prefix + ['.ts', '.tsx'].join(joiner);
+    }
+  }
   console.log(kleur.green('Updating package.json...'));
   const packageJsonPath = path.join(process.cwd(), 'package.json');
   const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
   packageJson.scripts = {
     ...packageJson.scripts,
-    lint: 'eslint --config .eslintrc.js --ext .tsx --ext .ts src',
-    'lint:fix': 'eslint --config .eslintrc.js --ext .ts --ext .tsx --fix src',
-    format: 'prettier --config .prettierrc.js --write src/**/*.{ts,tsx}',
+    lint: `eslint --config .eslintrc.js${listFileExtensions(nodeOrBrowser)} src`,
+    'lint:fix': `eslint --config .eslintrc.js${listFileExtensions(nodeOrBrowser)} --fix src`,
+    format: `prettier --config .prettierrc.js --write src/**/*.{${listFileExtensions(
+      nodeOrBrowser,
+      ',',
+      ''
+    ).trim()}}`,
   };
   fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
 }

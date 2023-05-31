@@ -23,7 +23,8 @@
     "format": "prettier --config .prettierrc.json --write src/**/*.ts",
     "lint": "eslint --ext .ts --config .eslintrc.json src",
     "lint:fix": "eslint --ext .ts --config .eslintrc.json --fix src",
-    "run:test": "yarn clean && mkdir test__ && cp -R test_project/ test__/ && cd test__ && ts-node ../src/init.ts && cd ..",
+    "run:test": "yarn clean && mkdir test__ && cp -R test_project/* test__/ && cd test__ && ts-node ../src/init.ts && cd ..",
+    "run:win-test": "rm -rf test__/ && mkdir test__ && cp -R test_project/* test__/ && cd test__ && ts-node ../src/init.ts && cd ..",
     "clean": "rm -rf test__/"
   },
   "author": "LeanyLabs",

@@ -12,13 +12,13 @@ import {
 } from './utils';
 
 async function init() {
-  await greeting();
+  const nodeOrBrowser = await greeting();
 
   await updateEditorConfig();
   await updateTsConfig();
   await updateElisnt();
   await updatePrettier();
-  await updatePackageJson();
+  await updatePackageJson(nodeOrBrowser);
 
   await installPackages();
 }
@@ -42,4 +42,11 @@ async function greeting() {
     // eslint-disable-next-line no-process-exit
     process.exit(0);
   }
+
+  const nodeOrBrowser = await promptly.choose(
+    kleur.blue('Are you developind node or browser solution?'),
+    ['node', 'browser']
+  );
+
+  return nodeOrBrowser;
 }
