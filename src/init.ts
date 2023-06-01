@@ -44,7 +44,7 @@ async function greeting() {
   }
 
   const nodeOrBrowser = await promptly.choose(
-    kleur.blue('Are you developind node or browser solution?'),
+    kleur.blue('Are you developing node or browser solution?'),
     ['node', 'browser']
   );
 
