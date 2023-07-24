@@ -9,25 +9,80 @@ const templatesPath =
     ? path.join(__dirname, '..', '..', 'templates')
     : path.join(__dirname, '..', 'templates');
 
+const packagesToAdd: { name: string; dist: string }[] = [
+  { name: 'prettier', dist: '-D' },
+  { name: 'eslint-plugin-node', dist: '-D' },
+  { name: 'eslint-plugin-prettier', dist: '-D' },
+  { name: 'eslint-plugin-import', dist: '-D' },
+  { name: '@leanylabs/ts-style-config', dist: '-D' },
+];
+
 export async function installPackages() {
+  const packageJson = getProjectPackageJson();
+
+  const devDependencies = packageJson.devDependencies;
+  const dependencies = packageJson.dependencies;
+
+  await execSync('yarn install');
+
   try {
-    await execSync('yarn add eslint-plugin-node -D');
-    await execSync('yarn add eslint-plugin-prettier -D');
+    for (const packageInfo of packagesToAdd) {
+      const currentDist = getCurrentDist({ devDependencies, dependencies }, packageInfo);
+      if (currentDist !== null && currentDist !== packageInfo.dist) {
+        await execSync(`yarn remove ${packageInfo.name}`);
+      }
+      await execSync(`yarn add ${packageInfo.name}@latest ${packageInfo.dist}`);
+    }
   } catch (e) {
     console.error('Failed to install packages:', e);
   }
 }
 
+function getCurrentDist(
+  {
+    devDependencies,
+    dependencies,
+  }: { devDependencies: Record<string, any>; dependencies: Record<string, any> },
+  packageInfo: { name: string; dist: string }
+) {
+  let currentDist = null;
+
+  if (devDependencies[packageInfo.name]) {
+    currentDist = '-D';
+  }
+
+  if (dependencies[packageInfo.name]) {
+    currentDist = '';
+  }
+
+  return currentDist;
+}
+
+function getProjectPackageJson() {
+  let projectPacjageJson: Record<string, any> | null = null;
+  return (() => {
+    if (projectPacjageJson === null) {
+      const packageJsonPath = getPathToPackageJson();
+      projectPacjageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+    }
+
+    return projectPacjageJson as Record<string, any>;
+  })();
+}
+
+function getPathToPackageJson() {
+  return path.join(process.cwd(), 'package.json');
+}
+
 export async function updatePackageJson(nodeOrBrowser: string) {
   console.log(kleur.green('Updating package.json...'));
-  const packageJsonPath = path.join(process.cwd(), 'package.json');
-  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+  const packageJson = getProjectPackageJson();
 
   packageJson.scripts = {
     ...packageJson.scripts,
     ...defineLinterCommands(nodeOrBrowser),
   };
-  fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
+  fs.writeFileSync(getPathToPackageJson(), JSON.stringify(packageJson, null, 2));
 }
 
 function defineLinterCommands(nodeOrBrowser: string) {
