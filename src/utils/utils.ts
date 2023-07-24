@@ -3,6 +3,7 @@ import * as fs from 'fs';
 
 import * as path from 'path';
 import { exec } from 'child_process';
+import { getPathToPackageJson, getProjectPackageJson } from './package-json-service';
 
 const templatesPath =
   __dirname.endsWith('build/src') || __dirname.endsWith('build\\src')
@@ -56,22 +57,6 @@ function getCurrentDist(
   }
 
   return currentDist;
-}
-
-function getProjectPackageJson() {
-  let projectPacjageJson: Record<string, any> | null = null;
-  return (() => {
-    if (projectPacjageJson === null) {
-      const packageJsonPath = getPathToPackageJson();
-      projectPacjageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
-    }
-
-    return projectPacjageJson as Record<string, any>;
-  })();
-}
-
-function getPathToPackageJson() {
-  return path.join(process.cwd(), 'package.json');
 }
 
 export async function updatePackageJson(nodeOrBrowser: string) {
