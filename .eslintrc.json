@@ -1,14 +1,8 @@
 {
-  "extends": [
-    "eslint:recommended",
-    "plugin:node/recommended",
-    "prettier"
-  ],
-  "plugins": [
-    "node",
-    "prettier"
-  ],
+  "extends": ["eslint:recommended", "plugin:node/recommended", "prettier"],
+  "plugins": ["node", "prettier", "import"],
   "rules": {
+    "import/no-default-export": "error",
     "prettier/prettier": "error",
     "block-scoped-var": "error",
     "eqeqeq": "error",
@@ -34,9 +28,7 @@
     {
       "files": ["**/*.ts", "**/*.tsx"],
       "parser": "@typescript-eslint/parser",
-      "extends": [
-        "plugin:@typescript-eslint/recommended"
-      ],
+      "extends": ["plugin:@typescript-eslint/recommended"],
       "rules": {
         "@typescript-eslint/no-non-null-assertion": "off",
         "@typescript-eslint/no-use-before-define": "off",
