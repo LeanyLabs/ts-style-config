@@ -12,6 +12,7 @@ const templatesPath =
 
 const packagesToAdd: { name: string; dist: string }[] = [
   { name: 'prettier', dist: '-D' },
+  { name: 'eslint', dist: '-D' },
   { name: 'eslint-plugin-node', dist: '-D' },
   { name: 'eslint-plugin-prettier', dist: '-D' },
   { name: 'eslint-plugin-import', dist: '-D' },
