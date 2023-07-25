@@ -48,11 +48,11 @@ function getCurrentDist(
 ) {
   let currentDist = null;
 
-  if (devDependencies[packageInfo.name]) {
+  if (devDependencies?.[packageInfo.name]) {
     currentDist = '-D';
   }
 
-  if (dependencies[packageInfo.name]) {
+  if (dependencies?.[packageInfo.name]) {
     currentDist = '';
   }
 
