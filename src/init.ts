@@ -25,7 +25,7 @@ init().then(() => process.exit(0));
 
 async function greeting() {
   console.log(
-    kleur.green(kleur.bold('The app will update typescript/linter configs in your project (Local)'))
+    kleur.green(kleur.bold('The app will update typescript/linter configs in your project'))
   );
   console.log(kleur.green(`\t${process.cwd()}\n`));
 
@@ -41,7 +41,7 @@ async function greeting() {
   }
 
   const nodeOrBrowser = await promptly.choose(
-    kleur.blue('Are you developing node or browser solution?'),
+    kleur.blue('Are you developing "node" or "browser" integration?'),
     ['node', 'browser']
   );
 
