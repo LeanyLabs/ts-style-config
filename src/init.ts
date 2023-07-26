@@ -8,7 +8,6 @@ import {
   updatePrettier,
   updateEditorConfig,
   updatePackageJson,
-  installPackages,
 } from './utils';
 
 async function init() {
@@ -19,8 +18,6 @@ async function init() {
   await updateElisnt();
   await updatePrettier();
   await updatePackageJson(nodeOrBrowser);
-
-  await installPackages();
 }
 
 // eslint-disable-next-line no-process-exit
@@ -28,7 +25,7 @@ init().then(() => process.exit(0));
 
 async function greeting() {
   console.log(
-    kleur.green(kleur.bold('The app will update typescript/linter configs in your project'))
+    kleur.green(kleur.bold('The app will update typescript/linter configs in your project (Local)'))
   );
   console.log(kleur.green(`\t${process.cwd()}\n`));
 

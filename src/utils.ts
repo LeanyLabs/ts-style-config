@@ -3,61 +3,12 @@ import * as fs from 'fs';
 
 import * as path from 'path';
 import { exec } from 'child_process';
-import { getPathToPackageJson, getProjectPackageJson } from './package-json-service';
+import { getPathToPackageJson, getProjectPackageJson } from './package-json.utils';
 
 const templatesPath =
   __dirname.endsWith('build/src') || __dirname.endsWith('build\\src')
     ? path.join(__dirname, '..', '..', 'templates')
     : path.join(__dirname, '..', 'templates');
-
-const packagesToAdd: { name: string; dist: string }[] = [
-  { name: 'prettier', dist: '-D' },
-  { name: 'eslint-plugin-node', dist: '-D' },
-  { name: 'eslint-plugin-prettier', dist: '-D' },
-  { name: 'eslint-plugin-import', dist: '-D' },
-  { name: '@leanylabs/ts-style-config', dist: '-D' },
-];
-
-export async function installPackages() {
-  const packageJson = getProjectPackageJson();
-
-  const devDependencies = packageJson.devDependencies;
-  const dependencies = packageJson.dependencies;
-
-  await execSync('yarn install');
-
-  try {
-    for (const packageInfo of packagesToAdd) {
-      const currentDist = getCurrentDist({ devDependencies, dependencies }, packageInfo);
-      if (currentDist !== null && currentDist !== packageInfo.dist) {
-        await execSync(`yarn remove ${packageInfo.name}`);
-      }
-      await execSync(`yarn add ${packageInfo.name}@latest ${packageInfo.dist}`);
-    }
-  } catch (e) {
-    console.error('Failed to install packages:', e);
-  }
-}
-
-function getCurrentDist(
-  {
-    devDependencies,
-    dependencies,
-  }: { devDependencies: Record<string, any>; dependencies: Record<string, any> },
-  packageInfo: { name: string; dist: string }
-) {
-  let currentDist = null;
-
-  if (devDependencies?.[packageInfo.name]) {
-    currentDist = '-D';
-  }
-
-  if (dependencies?.[packageInfo.name]) {
-    currentDist = '';
-  }
-
-  return currentDist;
-}
 
 export async function updatePackageJson(nodeOrBrowser: string) {
   console.log(kleur.green('Updating package.json...'));
@@ -148,20 +99,4 @@ function copyFile(target: string, source?: string) {
   } catch (e) {
     console.error(`Failed to copy ${source} to ${target}:`, e);
   }
-}
-async function execSync(command: string) {
-  console.log(kleur.grey(` -- running command: ${command}`));
-  return new Promise((resolve, reject) => {
-    exec(command, (error, stdout, stderr) => {
-      if (error) {
-        reject(error);
-      }
-
-      if (stderr) {
-        reject(stderr);
-      }
-
-      resolve(stdout);
-    });
-  });
 }
