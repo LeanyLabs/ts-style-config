@@ -8,7 +8,6 @@ import {
   updatePrettier,
   updateEditorConfig,
   updatePackageJson,
-  installPackages,
 } from './utils';
 
 async function init() {
@@ -19,8 +18,6 @@ async function init() {
   await updateElisnt();
   await updatePrettier();
   await updatePackageJson(nodeOrBrowser);
-
-  await installPackages();
 }
 
 // eslint-disable-next-line no-process-exit
@@ -44,7 +41,7 @@ async function greeting() {
   }
 
   const nodeOrBrowser = await promptly.choose(
-    kleur.blue('Are you developing node or browser solution?'),
+    kleur.blue('Are you developing "node" or "browser" integration?'),
     ['node', 'browser']
   );
 

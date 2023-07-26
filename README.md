@@ -4,7 +4,7 @@ Install as dev dependency
 - yarn: `yarn add @leanylabs/ts-style-config -D`
 - npm: `npm install @leanylabs/ts-style-config -D`
 
-Run once after install
+Run once after install (or after updating version)
 `npx @leanylabs/ts-style-config`
 
 ### Commands
